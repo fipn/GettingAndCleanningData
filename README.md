@@ -22,8 +22,8 @@ The script performs the following tasks:
 4. Appropriately labels the data set with descriptive variable names. 
 5. Creates a second, independent tidy data set with the average of each 
 	variable for each activity and each subject. 
-6. Saves the tidy data set in a csv formatted text file, called tidy_dataset.txt, 
-	in the current workspace directory
+6. Saves the tidy data set in a csv formatted space separated text file, called 
+	tidy_dataset.txt, in the current workspace directory
 
 ## Input data source
 -------------------------------------------------------------------------------
@@ -49,9 +49,33 @@ http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartpho
 	
 The resulting tidy data set may be loaded in R Studio tidy data set:
 ``` 
- read.table("./tidy_dataset2.txt", header = TRUE)
+ read.table("./tidy_dataset.txt", header = TRUE)
 ```
 
+## Assumptions
+-------------------------------------------------------------------------------
+
+To form the tidy data set, the following assumptions where made about the data:
+
+1. Step 2 - Based on the data source README and associated files,the measurements 
+	extracted consisted of the result of a text search for the tokens "std" and 
+	"mean" on the variable names. Based on that search, the original data source
+	was reduced from 561 features down to 79.
+2. Step 3 - The resulting variables where modified to remove non-descriptive
+	prefixes and sufixes, such as "t" or "f", and special symbols such as "("
+	and ")"
+
+## Results
+-------------------------------------------------------------------------------
+
+The script provides as a result a tidy data set since:
+
+1. Each variable forms a column 
+2. Each observation forms a row
+3. Each type of observational unit forms a table
+
+As described by (http://vita.had.co.nz/papers/tidy-data.pdf)
+	
 ## License
 -------------------------------------------------------------------------------
 
