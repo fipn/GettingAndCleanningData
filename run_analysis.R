@@ -43,9 +43,13 @@ measurements  <- grep( "subject|activity|std|mean" , var_names, ignore.case = F 
 ## subset measurements 
 dataset <- dataset[, measurements]
 
+
+# Part 3 and 4 Setting descriptive names and do naming cleanup
+
 # Convert from text to factor
 dataset[,2] <- as.factor(dataset[,2])
 
+# Change from activity id to more descriptive name
 levels(dataset[,2]) <- gsub("1", "WALKING",            levels(dataset[,2]))
 levels(dataset[,2]) <- gsub("2", "WALKING_UPSTAIRS",   levels(dataset[,2]))
 levels(dataset[,2]) <- gsub("3", "WALKING_DOWNSTAIRS", levels(dataset[,2]))
@@ -53,16 +57,15 @@ levels(dataset[,2]) <- gsub("4", "SITTING",            levels(dataset[,2]))
 levels(dataset[,2]) <- gsub("5", "STANDING",           levels(dataset[,2]))
 levels(dataset[,2]) <- gsub("6", "LAYING",             levels(dataset[,2]))
 
-# Remove '()' 
+# Remove '()'  from variable names
 colnames(dataset) <- gsub("\\(\\)", "", colnames(dataset))
 
-# Remove duplicate 'BodyBody'
+# Remove duplicate 'BodyBody' from variable names
 colnames(dataset) <- gsub("BodyBody", "Body", colnames(dataset))
 
 # Remove 't' and 'f' prefixes from Body and Gravity fields
 colnames(dataset) <- gsub("fBody|tBody", "Body", colnames(dataset))
 colnames(dataset) <- gsub("tGravity", "Gravity", colnames(dataset))
-
 
 # Part 5 Do name cleanup and save
 
@@ -72,13 +75,8 @@ split_list <- split(dataset, list(dataset$activity, dataset$subject))
 # Calculate the average for each split
 mean_split_list <- lapply(split_list, colMeans)
 
-# Build data frame from result list
+# Build tidy data frame from result list
 tidy <- as.data.frame(t(as.data.frame(mean_split_list, optional = T)))
-
-# Part 3 and 4 Setting descriptive names and do naming cleanup
-
-
-
     
-write.table(tidy, file = "tidy_dataset2.txt", sep = " ", row.names = FALSE)
+write.table(tidy, file = "tidy_dataset.txt", sep = " ", row.names = FALSE)
 }
